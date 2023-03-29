@@ -46,11 +46,15 @@ export class News extends Component {
     // }
 
     async componentDidMount() {
+        this.props.setProgress(10);
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=e7198857fab346a2b4996cb9a7e87c0a&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({ loading: true });
         let data = await fetch(url);
+        this.props.setProgress(30);
         let parsedData = await data.json();
+        this.props.setProgress(70);
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false });
+        this.props.setProgress(100);
         //this.updateNews();
     }
     handlePrevClick = async () => {
@@ -98,7 +102,7 @@ export class News extends Component {
     render() {
         return (
             <>
-                <div style={{ margin: '35px 0' }}>
+                <div className='container' style={{ margin: '35px 0' }}>
                     <h1 className='text-center' >NewsDesk - Top Headlines </h1> <h4 style={{ textAlign: "left" }}><span className="badge bg-warning text-center">{this.capitalizeFirstLetter(this.props.category)}</span></h4>
                 </div>
 
